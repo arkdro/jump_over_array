@@ -1,11 +1,11 @@
 -module(check_array).
 
 -export([
-         check/1
+         calculate_jumps/1
         ]).
 
--spec check(list(integer())) -> {ok, pos_integer()} | never.
-check(L) ->
+-spec calculate_jumps(list(integer())) -> {ok, pos_integer()} | never.
+calculate_jumps(L) ->
     Initial = prepare_storage(),
     Filled = fill_storage(Initial, L),
     Idx = 0,

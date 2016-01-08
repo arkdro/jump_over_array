@@ -41,36 +41,36 @@ end_per_suite(_Config) ->
 
 check_simple_ok(_) ->
     L = [2, 3, -1, 1, 3],
-    {ok, 4} = check_array:check(L),
+    {ok, 4} = check_array:calculate_jumps(L),
     ok.
 
 check_simple_never(_) ->
     L = [1, 1, -1, 1],
-    never = check_array:check(L),
+    never = check_array:calculate_jumps(L),
     ok.
 
 check_ok1(_) ->
     L = [2, 3, -1, 1, -5],
-    {ok, 4} = check_array:check(L),
+    {ok, 4} = check_array:calculate_jumps(L),
     ok.
 
 check_ok2(_) ->
     L = [-1, 3, -1, 1, -5],
-    {ok, 1} = check_array:check(L),
+    {ok, 1} = check_array:calculate_jumps(L),
     ok.
 
 check_ok3(_) ->
     L = [5, 3, -1, 1, -5],
-    {ok, 1} = check_array:check(L),
+    {ok, 1} = check_array:calculate_jumps(L),
     ok.
 
 check_never1(_) ->
     L = [0, 1, -1, 1],
-    never = check_array:check(L),
+    never = check_array:calculate_jumps(L),
     ok.
 
 check_never2(_) ->
     L = [1, 1, 1, -3],
-    never = check_array:check(L),
+    never = check_array:calculate_jumps(L),
     ok.
 
