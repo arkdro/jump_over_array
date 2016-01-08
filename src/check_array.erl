@@ -28,9 +28,18 @@ fill_storage(Storage, L) ->
     lists:foldl(fun add_one_item/2, {0, Storage}, L).
 
 add_one_item(Val, {Idx, Storage}) ->
+    Updated = store_free_item(Idx, Val, Storage),
+    {Idx + 1, Updated}.
+
+store_free_item(Idx, Val, Storage) ->
     Item = {Idx, Val, free},
     ets:insert(Storage, Item),
-    {Idx + 1, Storage}.
+    Storage.
+
+store_used_item(Idx, Val, Storage) ->
+    Item = {Idx, Val, used},
+    ets:insert(Storage, Item),
+    Storage.
 
 fetch_one_item(Idx, Storage) ->
     [Item] = ets:lookup(Storage, Idx),
@@ -50,9 +59,7 @@ check_priv(Idx, Jumps, {Size, Storage}) ->
 
 mark_used_index(Idx, Storage) ->
     {_, Val, _} = fetch_one_item(Idx, Storage),
-    Item = {Idx, Val, used},
-    ets:insert(Storage, Item),
-    Storage.
+    store_used_item(Idx, Val, Storage).
 
 get_next_idx(Idx, Storage) ->
     {_, Val, _} = fetch_one_item(Idx, Storage),
