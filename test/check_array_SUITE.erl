@@ -23,7 +23,8 @@ groups() ->
                 {group, checks}
                ]},
      {checks, [], [
-                   check1
+                   check_simple_ok,
+                   check_simple_never
                   ]}
     ].
 
@@ -33,13 +34,13 @@ init_per_suite(Config) ->
 end_per_suite(_Config) ->
     ok.
 
-check1(_Config) ->
+check_simple_ok(_) ->
+    L = [2, 3, -1, 1, 3],
+    {ok, 4} = check_array:check(L),
     ok.
 
-%% ===================================================================
-%% Internal functions
-%% ===================================================================
-
-items1() ->
-    [1, 1, 1].
+check_simple_never(_) ->
+    L = [1, 1, -1, 1],
+    never = check_array:check(L),
+    ok.
 
