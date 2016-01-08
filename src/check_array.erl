@@ -10,7 +10,7 @@ calculate_jumps(L) ->
     Filled = fill_storage(Initial, L),
     Idx = 0,
     Jumps = 1,
-    Res = check_priv(Idx, Jumps, Filled),
+    Res = calculate_jumps_priv(Idx, Jumps, Filled),
     clear_storage(Filled),
     Res.
 
@@ -46,7 +46,7 @@ fetch_one_item(Idx, Storage) ->
     [Item] = ets:lookup(Storage, Idx),
     Item.
 
-check_priv(Idx, Jumps, {Size, Storage}) ->
+calculate_jumps_priv(Idx, Jumps, {Size, Storage}) ->
     Updated = mark_used_index(Idx, Storage),
     Next = get_next_idx(Idx, Updated),
     case check_index(Next, Size, Updated) of
@@ -55,7 +55,7 @@ check_priv(Idx, Jumps, {Size, Storage}) ->
         loop ->
             never;
         inside ->
-            check_priv(Next, Jumps + 1, {Size, Updated})
+            calculate_jumps_priv(Next, Jumps + 1, {Size, Updated})
     end.
 
 mark_used_index(Idx, Storage) ->
