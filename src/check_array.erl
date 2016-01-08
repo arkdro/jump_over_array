@@ -32,12 +32,13 @@ add_one_item(Val, {Idx, Storage}) ->
     {Idx + 1, Updated}.
 
 store_free_item(Idx, Val, Storage) ->
-    Item = {Idx, Val, free},
-    ets:insert(Storage, Item),
-    Storage.
+    store_item(Idx, Val, free, Storage).
 
 store_used_item(Idx, Val, Storage) ->
-    Item = {Idx, Val, used},
+    store_item(Idx, Val, used, Storage).
+
+store_item(Idx, Val, Usage, Storage) ->
+    Item = {Idx, Val, Usage},
     ets:insert(Storage, Item),
     Storage.
 
