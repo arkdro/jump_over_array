@@ -14,7 +14,9 @@ deps:
 clean:
 	$(REBAR) clean
 
-test:
+test: test_eunit test_ct
+
+test_eunit:
 	$(REBAR) eunit skip_deps=true
 
 shell:
@@ -23,10 +25,10 @@ shell:
 xref: compile
 	$(REBAR) xref skip_deps=true
 
-ct: compile
+test_ct: compile
 	$(REBAR) ct skip_deps=true
 
 dia:
 	dialyzer --src -r src
 
-.PHONY: all compile_all compile deps clean test shell xref ct
+.PHONY: all compile_all compile deps clean test shell xref test_ct test_eunit
