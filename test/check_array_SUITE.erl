@@ -23,6 +23,7 @@ groups() ->
                 {group, checks}
                ]},
      {checks, [], [
+                   check_empty_array,
                    check_ok1,
                    check_ok2,
                    check_ok3,
@@ -72,5 +73,9 @@ check_never1(_) ->
 check_never2(_) ->
     L = [1, 1, 1, -3],
     never = check_array:calculate_jumps(L),
+    ok.
+
+check_empty_array(_) ->
+    ?assertError({badmatch, []}, check_array:calculate_jumps([])),
     ok.
 
