@@ -25,9 +25,9 @@ clear_storage({_, Storage}) ->
     ets:delete(Storage).
 
 fill_storage(Storage, L) ->
-    lists:foldl(fun store_one_item/2, {0, Storage}, L).
+    lists:foldl(fun add_one_item/2, {0, Storage}, L).
 
-store_one_item(Val, {Idx, Storage}) ->
+add_one_item(Val, {Idx, Storage}) ->
     Item = {Idx, Val, free},
     ets:insert(Storage, Item),
     {Idx + 1, Storage}.
