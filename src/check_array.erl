@@ -10,7 +10,9 @@ check(L) ->
     Filled = fill_storage(Initial, L),
     Idx = 0,
     Jumps = 1,
-    check_priv(Idx, Jumps, Filled).
+    Res = check_priv(Idx, Jumps, Filled),
+    clear_storage(Filled),
+    Res.
 
 %% ===================================================================
 %% Internal functions
@@ -18,6 +20,9 @@ check(L) ->
 
 prepare_storage() ->
     ets:new(?MODULE, [set]).
+
+clear_storage({_, Storage}) ->
+    ets:delete(Storage).
 
 fill_storage(Storage, L) ->
     lists:foldl(fun store_one_item/2, {0, Storage}, L).
