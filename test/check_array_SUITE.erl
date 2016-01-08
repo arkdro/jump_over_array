@@ -27,6 +27,8 @@ groups() ->
                    check_ok2,
                    check_ok3,
                    check_simple_ok,
+                   check_never1,
+                   check_never2,
                    check_simple_never
                   ]}
     ].
@@ -60,5 +62,15 @@ check_ok2(_) ->
 check_ok3(_) ->
     L = [5, 3, -1, 1, -5],
     {ok, 1} = check_array:check(L),
+    ok.
+
+check_never1(_) ->
+    L = [0, 1, -1, 1],
+    never = check_array:check(L),
+    ok.
+
+check_never2(_) ->
+    L = [1, 1, 1, -3],
+    never = check_array:check(L),
     ok.
 
